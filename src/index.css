@@ -2,6 +2,59 @@
   box-sizing: border-box;
 }
 
+html,
 body {
   margin: 0;
+  height: 100%;
+}
+
+.form-label {
+  font-family: "Poppins";
+  font-weight: 400;
+}
+
+.form-control:focus {
+  background: none;
+  outline: none;
+  box-shadow: none;
+  border-color: #ff005563;
+}
+
+#root {
+  height: 100%;
+}
+
+.logo-bg {
+  background-color: #ff0054;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  font-family: 'Poppins'
+}
+
+.form-control {
+  font-family: 'Poppins';
+  font-size: 0.9rem;
+  color: #e4dfe163;
+}
+
+.form_btn {
+  background-color: #ff0054;
+  color: white;
+  font-size: medium;
+  padding: 0.5rem 4rem 0.5rem 4rem;
+  font-family: 'Poppins';
+}
+
+.form_btn:hover {
+  background-color: #ff0055d7;
+  color: white;
+}
+
+.login_text{
+  font-family: 'Poppins';
+  color:#f01313;
+  font-weight: 400;
 }
