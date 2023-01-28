@@ -19,7 +19,6 @@ export const Registration = () => {
     const [formErrors, SetformErrors] = useState({});
     const [isValid, SetisValid] = useState("false")
 
-
     const handleChange = (event) => {
         SetFormData({
             ...formData,
@@ -36,15 +35,14 @@ export const Registration = () => {
         }
         else {
             SetformErrors(validate(formData));
-            SetisValid("true")
             StoreData();
+            SetisValid("true")
             navigate("login")
             console.log(formData);
         }
     }
 
     const StoreData = () => {
-        console.log("Function Called")
         createUserWithEmailAndPassword(auth, formData.email, formData.password)
             .then((userCredential) => {
                 const user = userCredential.user;

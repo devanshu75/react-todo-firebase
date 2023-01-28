@@ -1,7 +1,8 @@
 import { useState } from "react"
+import { app } from "../firebase";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
-const auth = getAuth();
+const auth = getAuth(app);
 
 export const LogIn = () => {
 
@@ -31,7 +32,7 @@ export const LogIn = () => {
         signInWithEmailAndPassword(auth, formData.email, formData.password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                console.log("login successful");
+                alert("Login Successful")
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -46,7 +47,6 @@ export const LogIn = () => {
                 } else {
                     SetFormError("Login Fail! Enter a valid credential");
                 }
-
             });
     }
 
