@@ -24,6 +24,10 @@ body {
   height: 100%;
 }
 
+input {
+  color: black;
+}
+
 .logo-bg {
   background-color: #ff0054;
   display: flex;
@@ -37,7 +41,7 @@ body {
 .form-control {
   font-family: 'Poppins';
   font-size: 0.9rem;
-  color: #e4dfe163;
+  color: black;
 }
 
 .form_btn {
@@ -53,8 +57,13 @@ body {
   color: white;
 }
 
-.login_text{
+.login_text {
   font-family: 'Poppins';
-  color:#f01313;
+  color: #f01313;
   font-weight: 400;
+}
+
+p {
+  color: red;
+  font-family: 'Poppins';
 }
