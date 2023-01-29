@@ -34,7 +34,7 @@ export const Registration = () => {
             validate();
         }
         else {
-            SetformErrors(validate(formData));
+            SetformErrors(validate());
             StoreData();
             SetisValid("true")
             navigate("login")
@@ -63,7 +63,7 @@ export const Registration = () => {
             });
     }
 
-    const validate = (formData) => {
+    const validate = () => {
         const errors = {}
 
         if (!formData.userName) {

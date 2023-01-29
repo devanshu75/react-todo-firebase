@@ -13,7 +13,8 @@ export const LogIn = () => {
 
     const [passError, SetPassError] = useState("Enter Password");
     const [emailError, SetemailError] = useState("Enter your email");
-    const [FormError, SetFormError] = useState();
+    const [FormError, SetFormError] = useState({});
+    const [isSubmit, SetisSubmit] = useState(false);
 
     const handleChange = (event) => {
         SetFormData({
@@ -25,7 +26,26 @@ export const LogIn = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(formData);
-        Login();
+        if (isSubmit === false) {
+            SetFormError(validate())
+        }
+        else {
+            Login();
+        }
+    }
+
+    const validate = () => {
+        const errors = {}
+
+        if (!formData.email) {
+            errors.email = "email is required"
+        }
+        if (!formData.password) {
+            errors.password = "Password is required"
+        }
+        SetisSubmit("true");
+
+        return errors;
     }
 
     const Login = () => {
@@ -67,6 +87,7 @@ export const LogIn = () => {
                                 value={formData.email}
                                 placeholder="example@gmail.com" />
                             <p>{emailError}</p>
+                            <p>{FormError.email}</p>
                         </div>
                         <div class="mb-3">
                             <label for="password" className="form-label">Password</label>
@@ -77,6 +98,7 @@ export const LogIn = () => {
                                 className="form-control"
                                 placeholder="Enter your password" />
                             <p>{passError}</p>
+                            <p>{FormError.password}</p>
                         </div>
                         <div>
                             <p className="login_text">Forgot Your Password?</p>
