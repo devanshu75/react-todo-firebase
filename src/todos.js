@@ -17,7 +17,6 @@ export const Todos = () => {
                 </div>
 
                 <div className="col-md-9 form-content d-flex">
-
                     <div className="container d-flex justify-content-center align-items-center flex-column">
                         <div className="row">
                             <div class="col">

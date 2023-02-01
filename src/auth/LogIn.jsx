@@ -5,14 +5,13 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 const auth = getAuth(app);
 
 export const LogIn = () => {
-
     const [formData, SetFormData] = useState({
         email: '',
         password: '',
     })
 
-    const [passError, SetPassError] = useState("Enter Password");
-    const [emailError, SetemailError] = useState("Enter your email");
+    const [passError, SetPassError] = useState("");
+    const [emailError, SetemailError] = useState("");
     const [FormError, SetFormError] = useState({});
     const [isSubmit, SetisSubmit] = useState(false);
 
@@ -87,9 +86,10 @@ export const LogIn = () => {
                                 className="form-control"
                                 value={formData.email}
                                 placeholder="example@gmail.com" />
-                            <p className="error">{emailError}</p>
-                            <p className="error">{FormError.email}</p>
+                            <p>{FormError.email}</p>
+                            <p>{emailError}</p>
                         </div>
+
                         <div class="mb-3">
                             <label for="password" className="form-label">Password</label>
                             <input type="password"
@@ -98,13 +98,13 @@ export const LogIn = () => {
                                 name="password"
                                 className="form-control"
                                 placeholder="Enter your password" />
-                            <p className="error">{passError}</p>
-                            <p className="error">{FormError.password}</p>
+                            <p>{FormError.password}</p>
+                            <p>{passError}</p>
                         </div>
                         <div>
                             <p className="login_text error">Forgot Your Password?</p>
                         </div>
-                        <p>{FormError}</p>
+                        <p>{}</p>
                         <div className="justify-content-center align-items-center d-flex">
                             <button type="submit" className="btn form_btn">LogIn</button>
                         </div>
