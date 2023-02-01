@@ -100,7 +100,7 @@ export const Registration = () => {
                                 name="userName"
                                 value={formData.userName}
                                 class="form-control" placeholder="Enter UserName" />
-                            <p>{formErrors.userName}</p>
+                            <p className="error">{formErrors.userName}</p>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
@@ -109,7 +109,7 @@ export const Registration = () => {
                                 name="email"
                                 value={formData.email}
                                 class="form-control" placeholder="example@gmail.com" />
-                            <p>{formErrors.email}</p>
+                            <p className="error">{formErrors.email}</p>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
@@ -118,7 +118,7 @@ export const Registration = () => {
                                 name="password"
                                 value={formData.password}
                                 class="form-control" placeholder="Password must be 8 Character" />
-                            <p>{formErrors.password}</p>
+                            <p className="error">{formErrors.password}</p>
                         </div>
                         <div class="mb-3">
                             <label for="Confirm-password" class="form-label">Confirm Password</label>
@@ -127,7 +127,7 @@ export const Registration = () => {
                                 name="confirm_password"
                                 value={formData.confirm_password}
                                 class="form-control" placeholder="Confirm Password" />
-                            <p>{formErrors.confirm_password}</p>
+                            <p className="error">{formErrors.confirm_password}</p>
                         </div>
                         <div className="justify-content-center align-items-center d-flex">
                             <button type="submit" class="btn form_btn">SignUp</button>

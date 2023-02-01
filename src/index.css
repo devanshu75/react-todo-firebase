@@ -63,7 +63,97 @@ input {
   font-weight: 400;
 }
 
-p {
+.error {
   color: red;
   font-family: 'Poppins';
+}
+
+.icons {
+  color: #ff0054;
+  font-size: 5rem;
+
+}
+
+.user_name {
+  color: #ff0054;
+  font-family: "Poppins";
+  font-size: 1.3rem;
+}
+
+.user-border {
+  border: 1px solid;
+  padding: 50px;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.user-Name p {
+  color: white;
+  font-family: "Poppins";
+  font-size: 1.4rem;
+}
+
+.todo-btn {
+  background-color: white;
+  color: #ff0054;
+  font-weight: 700;
+  padding: 0.4rem 3rem 0.4rem 3rem;
+  font-family: 'Poppins';
+}
+
+.todo-btn:hover {
+  background-color: white;
+  color: #ff0054;
+}
+
+.input-group input {
+  border: 1px solid;
+}
+
+
+.todo_btn {
+  background-color: #ff0054;
+  color: white;
+  font-size: medium;
+  padding: 0.4rem 1rem 0.4rem 1rem;
+  font-family: 'Poppins';
+}
+
+.todo_btn:hover {
+  background-color: #ff0055d0;
+  color: white;
+  font-size: medium;
+  padding: 0.4rem 1rem 0.4rem 1rem;
+  font-family: 'Poppins';
+}
+
+.todo-list ul {
+  list-style: none;
+}
+
+.todo-list li {
+  padding: 1rem;
+}
+
+.CheckBox {
+  width: 15px;
+  height: 15px;
+}
+
+.todo-task {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.td-btn {
+  background-color: #ff0054;
+  color: white;
+  font-size: medium;
+  padding: 0.2rem 2rem 0.2rem 2rem;
+  font-family: 'Poppins';
+}
+
+.td-btn:hover {
+  border: 1px solid #ff0054;
+  color: #ff0054;
 }

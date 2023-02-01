@@ -30,6 +30,7 @@ export const LogIn = () => {
             SetFormError(validate())
         }
         else {
+            console.log(FormError)
             Login();
         }
     }
@@ -86,8 +87,8 @@ export const LogIn = () => {
                                 className="form-control"
                                 value={formData.email}
                                 placeholder="example@gmail.com" />
-                            <p>{emailError}</p>
-                            <p>{FormError.email}</p>
+                            <p className="error">{emailError}</p>
+                            <p className="error">{FormError.email}</p>
                         </div>
                         <div class="mb-3">
                             <label for="password" className="form-label">Password</label>
@@ -97,11 +98,11 @@ export const LogIn = () => {
                                 name="password"
                                 className="form-control"
                                 placeholder="Enter your password" />
-                            <p>{passError}</p>
-                            <p>{FormError.password}</p>
+                            <p className="error">{passError}</p>
+                            <p className="error">{FormError.password}</p>
                         </div>
                         <div>
-                            <p className="login_text">Forgot Your Password?</p>
+                            <p className="login_text error">Forgot Your Password?</p>
                         </div>
                         <p>{FormError}</p>
                         <div className="justify-content-center align-items-center d-flex">
