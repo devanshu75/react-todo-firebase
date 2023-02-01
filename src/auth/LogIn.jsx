@@ -1,10 +1,13 @@
 import { useState } from "react"
 import { app } from "../firebase";
+import { useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const auth = getAuth(app);
 
 export const LogIn = () => {
+    const navigate = useNavigate()
+
     const [formData, SetFormData] = useState({
         email: '',
         password: '',
@@ -53,6 +56,7 @@ export const LogIn = () => {
             .then((userCredential) => {
                 const user = userCredential.user;
                 alert("Login Successful")
+                navigate("todos")
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -104,7 +108,7 @@ export const LogIn = () => {
                         <div>
                             <p className="login_text error">Forgot Your Password?</p>
                         </div>
-                        <p>{}</p>
+                        <p>{ }</p>
                         <div className="justify-content-center align-items-center d-flex">
                             <button type="submit" className="btn form_btn">LogIn</button>
                         </div>
