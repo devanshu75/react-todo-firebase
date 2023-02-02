@@ -37,7 +37,6 @@ export const Registration = () => {
 
         if (isFormValid) {
             StoreData();
-            // navigate('login');
         }
         else {
             SetformErrors(validation)
