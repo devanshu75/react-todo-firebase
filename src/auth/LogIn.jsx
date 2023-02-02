@@ -90,8 +90,8 @@ export const LogIn = () => {
                                 className="form-control"
                                 value={formData.email}
                                 placeholder="example@gmail.com" />
-                            <p>{FormError.email}</p>
-                            <p>{emailError}</p>
+                            <p className="error">{FormError.email}</p>
+                            <p className="error">{emailError}</p>
                         </div>
 
                         <div class="mb-3">
@@ -102,8 +102,8 @@ export const LogIn = () => {
                                 name="password"
                                 className="form-control"
                                 placeholder="Enter your password" />
-                            <p>{FormError.password}</p>
-                            <p>{passError}</p>
+                            <p className="error">{FormError.password}</p>
+                            <p className="error">{passError}</p>
                         </div>
                         <div>
                             <p className="login_text error">Forgot Your Password?</p>

@@ -19,6 +19,7 @@ export const Registration = () => {
     })
 
     const [formErrors, SetformErrors] = useState({});
+    const [fireErrors, SetfireErrors] = useState("");
 
     const handleChange = (event) => {
         SetFormData({
@@ -36,6 +37,7 @@ export const Registration = () => {
 
         if (isFormValid) {
             StoreData();
+            // navigate('login');
         }
         else {
             SetformErrors(validation)
@@ -56,10 +58,24 @@ export const Registration = () => {
                 } catch (e) {
                     console.error("Error adding document:", e);
                 }
+                navigate('login');
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
+                console.log(errorMessage)
+                console.log(errorCode)
+
+                if (errorCode === "auth/email-already-in-use") {
+                    SetfireErrors("Email already exists");
+                }
+
+                if (errorCode === "auth/invalid-password") {
+                    SetfireErrors("Password too weak");
+                }
+                else {
+                    SetfireErrors("Invalid Data");
+                }
             });
     }
 
@@ -75,8 +91,8 @@ export const Registration = () => {
         if (!formData.password) {
             errors.password = "Password is required"
         }
-        if (formData.password.length <= 4) {
-            errors.password = "Password must be min of 4 character"
+        if (formData.password.length <= 6) {
+            errors.password = "Password must be min of 6 character"
         }
         if (!formData.confirm_password) {
             errors.confirm_password = "Confirm password is required"
@@ -133,6 +149,9 @@ export const Registration = () => {
                         </div>
                         <div className="justify-content-center align-items-center d-flex">
                             <button type="submit" class="btn form_btn">SignUp</button>
+                        </div>
+                        <div className="mt-2">
+                            <p className="error">{fireErrors}</p>
                         </div>
                     </form>
                 </div>
