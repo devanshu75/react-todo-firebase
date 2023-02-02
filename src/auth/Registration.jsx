@@ -8,7 +8,9 @@ const db = getFirestore(app);
 const auth = getAuth();
 
 export const Registration = () => {
+
     const navigate = useNavigate();
+
     const [formData, SetFormData] = useState({
         userName: "",
         email: "",
@@ -17,7 +19,6 @@ export const Registration = () => {
     })
 
     const [formErrors, SetformErrors] = useState({});
-    const [isValid, SetisValid] = useState("false")
 
     const handleChange = (event) => {
         SetFormData({
@@ -30,15 +31,14 @@ export const Registration = () => {
 
         event.preventDefault();
 
-        if (isValid === false) {
-            validate();
+        let validation = validate();
+        let isFormValid = Object.keys(validation).length === 0;
+
+        if (isFormValid) {
+            StoreData();
         }
         else {
-            SetformErrors(validate());
-            StoreData();
-            SetisValid("true")
-            navigate("login")
-            console.log(formData);
+            SetformErrors(validation)
         }
     }
 
@@ -73,13 +73,15 @@ export const Registration = () => {
             errors.email = "Email is required"
         }
         if (!formData.password) {
-            errors.password = "Password is require"
-        } else if (formData.password > 4) {
-            errors.password = "Password must be min of 8 character"
+            errors.password = "Password is required"
+        }
+        if (formData.password.length <= 4) {
+            errors.password = "Password must be min of 4 character"
         }
         if (!formData.confirm_password) {
             errors.confirm_password = "Confirm password is required"
-        } else if (formData.confirm_password !== formData.password) {
+        }
+        if (formData.confirm_password !== formData.password) {
             errors.confirm_password = "Password must be same "
         }
         return errors;
