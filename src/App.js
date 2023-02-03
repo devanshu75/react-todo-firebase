@@ -8,9 +8,10 @@ export default function App() {
   return (
     <div className="App container-fluid h-100">
       <Routes>
-        <Route path='/' element={<Registration />} />
+        {/* <Route path='/' element={<Registration />} />
         <Route path='login' element={<LogIn />} />
-        <Route path='login/todos' element={<Todos />} />
+        <Route path='login/todos' element={<Todos />} /> */}
+        <Route path='/' element={<Todos />} />
       </Routes>
     </div>
   );
