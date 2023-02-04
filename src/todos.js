@@ -7,7 +7,8 @@ export const Todos = () => {
     const [newTask, SetnewTask] = useState()
 
     function handleChange(event) {
-        SetnewTask(event.target.value);
+        const task = event.target.value
+        SetnewTask(task);
     }
 
     const addTask = () => {
@@ -28,7 +29,8 @@ export const Todos = () => {
             TodoList.map((task) => {
                 if (task.id === id) {
                     return { ...task, completed: true };
-                } else {
+                }
+                else {
                     return task;
                 }
             })
