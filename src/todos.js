@@ -1,10 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Task } from "./Task";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { app } from "./firebase";
+
+const auth = getAuth();
+const db = getFirestore(app);
 
 export const Todos = () => {
 
     const [TodoList, SetTodoList] = useState([]);
     const [newTask, SetnewTask] = useState()
+    const [currUser, SetcurrUser] = useState();
 
     function handleChange(event) {
         const task = event.target.value
@@ -37,6 +44,23 @@ export const Todos = () => {
         )
     }
 
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            console.log(user.uid)
+            getDoc(doc(db, "users", user.uid))
+                .then(docSnap => {
+                    if (docSnap.exists()) {
+                        const UserData = docSnap.data().userName;
+                        SetcurrUser(UserData)
+                        console.log("User Data from firebase", UserData)     
+                    } else {
+                        SetcurrUser(null)
+                        console.log("No Such Document");
+                    }
+                })
+        })
+    }, []);
+
     return (
         <div className="continaer-fluid h-100">
 
@@ -47,7 +71,7 @@ export const Todos = () => {
                         <i class="fa-solid fa-user icons"></i>
                     </div>
                     <div className="user-Name mt-3">
-                        <p>@UserName</p>
+                        <p>{currUser}</p>
                     </div>
                     <button className="btn todo-btn">LogOut</button>
                 </div>

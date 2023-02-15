@@ -76,6 +76,7 @@ export const Registration = () => {
                     SetfireErrors("Invalid Data");
                 }
             });
+
     }
 
     const validate = () => {
