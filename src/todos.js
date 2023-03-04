@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Task } from "./Task";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { getFirestore, doc, getDoc, collection, addDoc } from "firebase/firestore";
 import { app } from "./firebase";
 
 const auth = getAuth();
@@ -18,13 +18,32 @@ export const Todos = () => {
         SetnewTask(task);
     }
 
-    const addTask = () => {
+    const addTask = async () => {
         const task = {
-            id: TodoList.length === 0 ? 1 : TodoList[TodoList.length - 1].id + 1,
             taskName: newTask,
             completed: false,
         }
-        SetTodoList([...TodoList, task]);
+
+        let updatedTodoList = [...TodoList, await AddToFireStore(task)]
+
+        SetTodoList(updatedTodoList)
+
+        console.log(updatedTodoList)
+
+    }
+
+    const AddToFireStore = async (task) => {
+        const newCollectionRef = collection(db, 'users', auth.currentUser.uid, 'tasks')
+
+        let firebaseTaskDocRef = await addDoc(newCollectionRef, task = {
+            taskName: newTask,
+            completed: false,
+        });
+
+        return {
+            id: firebaseTaskDocRef.id,
+            ...task
+        };
     }
 
     const deleteTask = (id) => {
@@ -52,7 +71,7 @@ export const Todos = () => {
                     if (docSnap.exists()) {
                         const UserData = docSnap.data().userName;
                         SetcurrUser(UserData)
-                        console.log("User Data from firebase", UserData)     
+                        console.log("User Data from firebase", UserData)
                     } else {
                         SetcurrUser(null)
                         console.log("No Such Document");
