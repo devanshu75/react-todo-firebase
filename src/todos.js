@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Task } from "./Task";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { getFirestore, doc, getDoc, collection, addDoc } from "firebase/firestore";
+import { getFirestore, doc, getDoc, collection, addDoc, getDocs } from "firebase/firestore";
 import { app } from "./firebase";
 
 const auth = getAuth();
 const db = getFirestore(app);
 
 export const Todos = () => {
-
+    //Always ensure that the following keys are always present in a Todo List object
+    //1.id
+    //2.taskName
+    //3.completed
     const [TodoList, SetTodoList] = useState([]);
     const [newTask, SetnewTask] = useState()
     const [currUser, SetcurrUser] = useState();
@@ -23,13 +26,9 @@ export const Todos = () => {
             taskName: newTask,
             completed: false,
         }
-
         let updatedTodoList = [...TodoList, await AddToFireStore(task)]
-
         SetTodoList(updatedTodoList)
-
         console.log(updatedTodoList)
-
     }
 
     const AddToFireStore = async (task) => {
@@ -44,6 +43,7 @@ export const Todos = () => {
             id: firebaseTaskDocRef.id,
             ...task
         };
+
     }
 
     const deleteTask = (id) => {
@@ -64,8 +64,20 @@ export const Todos = () => {
     }
 
     useEffect(() => {
+        onAuthStateChanged(auth, async (user) => {
+            const querySnapshot = await getDocs(collection(db, "users", user.uid, "tasks"))
+            const tasks = [];
+            querySnapshot.forEach(doc => {
+                // console.log(doc.id, "=>", doc.data());
+                tasks.push(doc.data());
+            });
+            SetTodoList(tasks)
+            console.log(tasks);
+        })
+    }, [])
+
+    useEffect(() => {
         onAuthStateChanged(auth, (user) => {
-            console.log(user.uid)
             getDoc(doc(db, "users", user.uid))
                 .then(docSnap => {
                     if (docSnap.exists()) {
