@@ -63,20 +63,41 @@ export const Todos = () => {
         )
     }
 
-    useEffect(() => {
+    const fetchData = async () => {
         onAuthStateChanged(auth, async (user) => {
+
+            //Collection Snapshot,contains list of task documents
             const querySnapshot = await getDocs(collection(db, "users", user.uid, "tasks"))
+
+            // console.log(querySnapshot.docs);
+
+            //empty array 
             const tasks = [];
-            querySnapshot.forEach(doc => {
-                // console.log(doc.id, "=>", doc.data());
-                tasks.push(doc.data());
+
+            console.log("querysnapshot data",querySnapshot.docs);
+
+            querySnapshot.forEach((doc) => {
+
+                //creating new task object with ID
+                let task = {
+                    id: doc.id,
+                    ...doc.data()
+                }
+
+                tasks.push(task)
             });
+            
             SetTodoList(tasks)
-            console.log(tasks);
+            console.log(tasks)
         })
+    }
+
+    useEffect(() => {
+        fetchData();
     }, [])
 
     useEffect(() => {
+
         onAuthStateChanged(auth, (user) => {
             getDoc(doc(db, "users", user.uid))
                 .then(docSnap => {
