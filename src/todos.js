@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Task } from "./Task";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { getFirestore, doc, getDoc, collection, addDoc, getDocs } from "firebase/firestore";
-import { app } from "./firebase";
+import { getFirestore, doc, getDoc, collection, addDoc, getDocs, deleteDoc } from "firebase/firestore";
+import { app } from "./firebase";;
 
 const auth = getAuth();
 const db = getFirestore(app);
@@ -46,8 +46,21 @@ export const Todos = () => {
 
     }
 
-    const deleteTask = (id) => {
+    const deleteTask = async (id) => {
+
         SetTodoList(TodoList.filter((task) => task.id !== id));
+
+        FirebaseDocDelete(id);
+    }
+
+    const FirebaseDocDelete = async(id) => {
+
+        const deletePath = doc(db,`users/${auth.currentUser.uid}/tasks`,id)
+        console.log(deletePath);
+
+        await deleteDoc(doc(db,`users/${auth.currentUser.uid}/tasks`,id))
+
+        
     }
 
     const completeTask = (id) => {
@@ -69,12 +82,8 @@ export const Todos = () => {
             //Collection Snapshot,contains list of task documents
             const querySnapshot = await getDocs(collection(db, "users", user.uid, "tasks"))
 
-            // console.log(querySnapshot.docs);
-
             //empty array 
             const tasks = [];
-
-            console.log("querysnapshot data",querySnapshot.docs);
 
             querySnapshot.forEach((doc) => {
 
@@ -86,9 +95,8 @@ export const Todos = () => {
 
                 tasks.push(task)
             });
-            
+
             SetTodoList(tasks)
-            console.log(tasks)
         })
     }
 
