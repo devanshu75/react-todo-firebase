@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Task } from "./Task";
+import Task from "./Task";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { getFirestore, doc, getDoc, collection, addDoc, getDocs, deleteDoc } from "firebase/firestore";
-import { app } from "./firebase";;
+import { getFirestore, doc, getDoc, collection, addDoc, deleteDoc } from "firebase/firestore";
+import { app } from "./firebase";
+import FirefetchData from "./db";
 
 const auth = getAuth();
 const db = getFirestore(app);
 
 export const Todos = () => {
-    //Always ensure that the following keys are always present in a Todo List object
-    //1.id
-    //2.taskName
-    //3.completed
+
     const [TodoList, SetTodoList] = useState([]);
     const [newTask, SetnewTask] = useState()
     const [currUser, SetcurrUser] = useState();
+
+    console.log(TodoList)
 
     function handleChange(event) {
         const task = event.target.value
@@ -28,7 +28,6 @@ export const Todos = () => {
         }
         let updatedTodoList = [...TodoList, await AddToFireStore(task)]
         SetTodoList(updatedTodoList)
-        console.log(updatedTodoList)
     }
 
     const AddToFireStore = async (task) => {
@@ -53,14 +52,8 @@ export const Todos = () => {
         FirebaseDocDelete(id);
     }
 
-    const FirebaseDocDelete = async(id) => {
-
-        const deletePath = doc(db,`users/${auth.currentUser.uid}/tasks`,id)
-        console.log(deletePath);
-
-        await deleteDoc(doc(db,`users/${auth.currentUser.uid}/tasks`,id))
-
-        
+    const FirebaseDocDelete = async (id) => {
+        await deleteDoc(doc(db, `users/${auth.currentUser.uid}/tasks`, id))
     }
 
     const completeTask = (id) => {
@@ -76,32 +69,39 @@ export const Todos = () => {
         )
     }
 
-    const fetchData = async () => {
-        onAuthStateChanged(auth, async (user) => {
+    // const fetchData = async () => {
+    //     onAuthStateChanged(auth, async (user) => {
 
-            //Collection Snapshot,contains list of task documents
-            const querySnapshot = await getDocs(collection(db, "users", user.uid, "tasks"))
+    //         //Collection Snapshot,contains list of task documents
+    //         const querySnapshot = await getDocs(collection(db, "users", user.uid, "tasks"))
 
-            //empty array 
-            const tasks = [];
+    //         //empty array 
+    //         const tasks = [];
 
-            querySnapshot.forEach((doc) => {
+    //         querySnapshot.forEach((doc) => {
+    //             //creating new task object with ID
+    //             let task = {
+    //                 id: doc.id,
+    //                 ...doc.data()
+    //             }
+    //             tasks.push(task)
+    //         });
 
-                //creating new task object with ID
-                let task = {
-                    id: doc.id,
-                    ...doc.data()
-                }
-
-                tasks.push(task)
-            });
-
-            SetTodoList(tasks)
-        })
-    }
+    //         SetTodoList(tasks)
+    //     })
+    // }
 
     useEffect(() => {
-        fetchData();
+        // fetchData();
+        FirefetchData()
+            .then((data) => {
+                console.log("then", data)
+                SetTodoList(data);
+            })
+            .catch((error) => {
+                console.log("catch", error)
+            })
+        // console.log(tasksData);
     }, [])
 
     useEffect(() => {
@@ -112,10 +112,8 @@ export const Todos = () => {
                     if (docSnap.exists()) {
                         const UserData = docSnap.data().userName;
                         SetcurrUser(UserData)
-                        console.log("User Data from firebase", UserData)
                     } else {
                         SetcurrUser(null)
-                        console.log("No Such Document");
                     }
                 })
         })
@@ -143,7 +141,7 @@ export const Todos = () => {
                                 <div class="input-group">
                                     <input type="text"
                                         class="form-control rounded-0"
-                                        placeholder="Enter Task"
+                                        placeholder=""
                                         onChange={handleChange}
                                     />
                                     <button onClick={addTask}
@@ -154,14 +152,16 @@ export const Todos = () => {
                         </div>
                         <div className="row mt-4 todo-list">
                             <h3>Todo List</h3>
-                            {TodoList.map((task) => {
+                            {TodoList.map((task,key) => {
                                 return (
                                     <Task
                                         taskName={task.taskName}
+                                        key = {key}
                                         id={task.id}
                                         completed={task.complete}
                                         deleteTask={deleteTask}
                                         completeTask={completeTask}
+                                        handleTask={SetTodoList}
                                     />
                                 )
                             })}
