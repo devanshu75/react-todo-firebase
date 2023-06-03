@@ -4,37 +4,31 @@ import Modal from 'react-bootstrap/Modal';
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { app } from "../firebase";
-import FirefetchData from "../db";
 
 const auth = getAuth();
 const db = getFirestore(app);
 
-const EditModals = ({ show, onHide, taskName, id, handleTask }) => {
+
+const EditModals = ({ show, onHide, taskName, id, handleUpdatedTask, taskData }) => {
 
     const [UpdateTask, SetUpdateTask] = useState();
     const [isValid, SetValid] = useState();
 
+    console.log("updataks", handleUpdatedTask)
+
     async function onEdit() {
         try {
-            const DocRef = await setDoc(doc(db, `users/${auth.currentUser.uid}/tasks`, id), {
+            await setDoc(doc(db, `users/${auth.currentUser.uid}/tasks`, id), {
                 taskName: UpdateTask,
                 completed: false
             })
+            // handleUpdatedTask(taskData);
+            // SetValid(!isValid);
 
-            SetValid(!isValid)
-            // FirefetchData()
-            //     .then((data) => {
-            //         console.log("then", data)
-            //         handleTask(data)
-            //     })
-            //     .catch((error) => {
-            //         console.log("catch", error)
-            //     })
         } catch (e) {
             console.error(e);
         } finally {
-            console.log("Data Updated")
-
+            // console.log("Data Updated")
         }
     }
 
@@ -42,18 +36,6 @@ const EditModals = ({ show, onHide, taskName, id, handleTask }) => {
         onEdit();
         onHide();
     }
-
-    useEffect(() => {
-        FirefetchData()
-            .then((data) => {
-                console.log("then", data)
-                // SetTodoList(data);
-            })
-            .catch((error) => {
-                console.log("catch", error)
-            })
-
-    }, [isValid]);
 
     return (
         <>

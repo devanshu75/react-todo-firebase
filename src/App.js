@@ -12,11 +12,8 @@ export default function App() {
     <div className="App container-fluid h-100">
       <Routes>
         <Route path='/' element={<Registration />} />
-        <Route path='login' element={<LogIn />} />
-        <Route path='login/todos' element={<Todos />} />
-        <Route path='/' element={<Todos />} />
-        <Route path='modals' element={<Modals />} />
-        <Route path='todos/login' element={<LogIn />} />
+        <Route path='/todos' element={<Todos />} />
+        <Route path='/login' element={<LogIn />} />
       </Routes>
     </div>
   );

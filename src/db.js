@@ -24,7 +24,7 @@ const FirefetchData = async () => {
             tasks.push(task)
         });
 
-        console.log("fetch db file", tasks)
+        // console.log("fetch db file", tasks)
 
     })
     return tasks;

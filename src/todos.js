@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Task from "./Task";
-import { useNavigate } from "react-router-dom";
-import { getAuth, onAuthStateChanged,signOut } from "firebase/auth";
+import { useNavigate, Navigate } from "react-router-dom";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { getFirestore, doc, getDoc, collection, addDoc, deleteDoc } from "firebase/firestore";
 import { app } from "./firebase";
 import FirefetchData from "./db";
@@ -17,7 +17,7 @@ export const Todos = () => {
     const [newTask, SetnewTask] = useState()
     const [currUser, SetcurrUser] = useState();
 
-    console.log(TodoList)
+    // console.log(TodoList)
 
     const handleChange = (event) => {
         const task = event.target.value
@@ -74,7 +74,7 @@ export const Todos = () => {
 
     const Logout = () => {
         signOut(auth).then(() => {
-            navigate('/todos/login');
+            navigate('/login');
         }).catch((error) => {
             console.log(error)
         })
@@ -102,16 +102,20 @@ export const Todos = () => {
     //     })
     // }
 
-    useEffect(() => {
-        // fetchData();
+    const handleUpdatedTask = () => {
         FirefetchData()
             .then((data) => {
-                console.log("then", data)
+                // console.log("then", data)
                 SetTodoList(data);
             })
             .catch((error) => {
                 console.log("catch", error)
             })
+    }
+
+    useEffect(() => {
+        // fetchData();
+        handleUpdatedTask()
         // console.log(tasksData);
     }, [])
 
@@ -129,6 +133,8 @@ export const Todos = () => {
                 })
         })
     }, []);
+
+   
 
     return (
         <div className="continaer-fluid h-100">
@@ -148,16 +154,16 @@ export const Todos = () => {
                 <div className="col-md-9 form-content d-flex">
                     <div className="container d-flex justify-content-center align-items-center flex-column">
                         <div className="row">
-                            <div class="col">
-                                <div class="input-group">
+                            <div className="col">
+                                <div className="input-group">
                                     <input type="text"
-                                        class="form-control rounded-0"
+                                        className="form-control rounded-0"
                                         placeholder=""
                                         onChange={handleChange}
                                     />
                                     <button onClick={addTask}
                                         type="submit"
-                                        class="btn rounded-0 todo_btn">Add Task</button>
+                                        className="btn rounded-0 todo_btn">Add Task</button>
                                 </div>
                             </div>
                         </div>
@@ -172,7 +178,7 @@ export const Todos = () => {
                                         completed={task.complete}
                                         deleteTask={deleteTask}
                                         completeTask={completeTask}
-                                        handleTask={SetTodoList}
+                                        handleUpdatedTask={SetTodoList}
                                     />
                                 )
                             })}

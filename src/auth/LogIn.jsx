@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { app } from "../firebase";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const auth = getAuth(app);
@@ -18,16 +18,15 @@ export const LogIn = () => {
         await signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                navigate("todos")
-                console.log(user)
+                navigate("/todos")
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                
-                console.log(errorMessage);
-                console.log(errorCode);
-                
+
+                // console.log(errorMessage);
+                // console.log(errorCode);
+
                 if (errorCode === "auth/user-not-found") {
                     setotherError("user not found");
                 }
@@ -51,7 +50,7 @@ export const LogIn = () => {
                 </div>
                 <div className="col-md-9 form-content d-flex justify-content-center align-items-center">
                     <form className="w-50">
-                        <div class="mb-3">
+                        <div className="mb-3">
                             <label for="email" className="form-label">Email</label>
                             <input type="text"
                                 onChange={(e) => setEmail(e.target.value)}
@@ -60,7 +59,7 @@ export const LogIn = () => {
                                 placeholder="example@gmail.com" />
                         </div>
 
-                        <div class="mb-3">
+                        <div className="mb-3">
                             <label for="password" className="form-label">Password</label>
                             <input type="password"
                                 onChange={(e) => setPassword(e.target.value)}

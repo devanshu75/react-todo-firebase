@@ -25,7 +25,7 @@ const Task = (props) => {
                 id = {props.id}
                 show={show}
                 onHide={handleClose}
-                handleTask={props.handleTask}
+                handleUpdatedTask={props.handleUpdatedTask}
             />}
         </>
     )

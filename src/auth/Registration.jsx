@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Navigate} from "react-router-dom";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { app } from "../firebase";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
@@ -58,6 +58,7 @@ export const Registration = () => {
                     console.error("Error adding document:", e);
                 }
                 navigate('login');
+                          
             })
             .catch((error) => {
                 const errorCode = error.code;
