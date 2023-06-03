@@ -80,32 +80,9 @@ export const Todos = () => {
         })
     }
 
-    // const fetchData = async () => {
-    //     onAuthStateChanged(auth, async (user) => {
-
-    //         //Collection Snapshot,contains list of task documents
-    //         const querySnapshot = await getDocs(collection(db, "users", user.uid, "tasks"))
-
-    //         //empty array 
-    //         const tasks = [];
-
-    //         querySnapshot.forEach((doc) => {
-    //             //creating new task object with ID
-    //             let task = {
-    //                 id: doc.id,
-    //                 ...doc.data()
-    //             }
-    //             tasks.push(task)
-    //         });
-
-    //         SetTodoList(tasks)
-    //     })
-    // }
-
     const handleUpdatedTask = () => {
         FirefetchData()
             .then((data) => {
-                // console.log("then", data)
                 SetTodoList(data);
             })
             .catch((error) => {
@@ -114,13 +91,10 @@ export const Todos = () => {
     }
 
     useEffect(() => {
-        // fetchData();
-        handleUpdatedTask()
-        // console.log(tasksData);
+        handleUpdatedTask()     
     }, [])
 
     useEffect(() => {
-
         onAuthStateChanged(auth, (user) => {
             getDoc(doc(db, "users", user.uid))
                 .then(docSnap => {

@@ -16,7 +16,7 @@ const EditModals = ({ show, onHide, taskName, id, handleUpdatedTask, taskData })
 
     console.log("updataks", handleUpdatedTask)
 
-    async function onEdit() {
+    const onEdit = async() => {
         try {
             await setDoc(doc(db, `users/${auth.currentUser.uid}/tasks`, id), {
                 taskName: UpdateTask,
@@ -32,7 +32,7 @@ const EditModals = ({ show, onHide, taskName, id, handleUpdatedTask, taskData })
         }
     }
 
-    function handleModal() {
+    const handleModal = () => {
         onEdit();
         onHide();
     }

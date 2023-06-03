@@ -13,8 +13,6 @@ const FirefetchData = async () => {
         //Collection Snapshot,contains list of task documents
         const querySnapshot = await getDocs(collection(db, "users", user.uid, "tasks"))
 
-        //empty array 
-
         querySnapshot.forEach((doc) => {
             //creating new task object with ID
             let task = {
