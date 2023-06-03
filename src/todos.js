@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Task from "./Task";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { getAuth, onAuthStateChanged,signOut } from "firebase/auth";
 import { getFirestore, doc, getDoc, collection, addDoc, deleteDoc } from "firebase/firestore";
 import { app } from "./firebase";
 import FirefetchData from "./db";
@@ -10,13 +11,15 @@ const db = getFirestore(app);
 
 export const Todos = () => {
 
+    const navigate = useNavigate();
+
     const [TodoList, SetTodoList] = useState([]);
     const [newTask, SetnewTask] = useState()
     const [currUser, SetcurrUser] = useState();
 
     console.log(TodoList)
 
-    function handleChange(event) {
+    const handleChange = (event) => {
         const task = event.target.value
         SetnewTask(task);
     }
@@ -67,6 +70,14 @@ export const Todos = () => {
                 }
             })
         )
+    }
+
+    const Logout = () => {
+        signOut(auth).then(() => {
+            navigate('/todos/login');
+        }).catch((error) => {
+            console.log(error)
+        })
     }
 
     // const fetchData = async () => {
@@ -131,7 +142,7 @@ export const Todos = () => {
                     <div className="user-Name mt-3">
                         <p>{currUser}</p>
                     </div>
-                    <button className="btn todo-btn">LogOut</button>
+                    <button className="btn todo-btn" onClick={Logout}>LogOut</button>
                 </div>
 
                 <div className="col-md-9 form-content d-flex">
@@ -152,11 +163,11 @@ export const Todos = () => {
                         </div>
                         <div className="row mt-4 todo-list">
                             <h3>Todo List</h3>
-                            {TodoList.map((task,key) => {
+                            {TodoList.map((task, key) => {
                                 return (
                                     <Task
                                         taskName={task.taskName}
-                                        key = {key}
+                                        key={key}
                                         id={task.id}
                                         completed={task.complete}
                                         deleteTask={deleteTask}

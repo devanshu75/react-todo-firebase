@@ -20,7 +20,6 @@ const EditModals = ({ show, onHide, taskName, id, handleTask }) => {
                 taskName: UpdateTask,
                 completed: false
             })
-            console.log("docRef", DocRef);
 
             SetValid(!isValid)
             // FirefetchData()
