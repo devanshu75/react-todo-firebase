@@ -91,7 +91,7 @@ export const Todos = () => {
     }
 
     useEffect(() => {
-        handleUpdatedTask()     
+        handleUpdatedTask()
     }, [])
 
     useEffect(() => {
@@ -108,7 +108,6 @@ export const Todos = () => {
         })
     }, []);
 
-   
 
     return (
         <div className="continaer-fluid h-100">

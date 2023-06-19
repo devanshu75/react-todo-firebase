@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { getFirestore, doc, setDoc } from "firebase/firestore";
@@ -14,9 +14,9 @@ const EditModals = ({ show, onHide, taskName, id, handleUpdatedTask, taskData })
     const [UpdateTask, SetUpdateTask] = useState();
     const [isValid, SetValid] = useState();
 
-    console.log("updataks", handleUpdatedTask)
+    // console.log("updataks", handleUpdatedTask)
 
-    const onEdit = async() => {
+    const onEdit = async () => {
         try {
             await setDoc(doc(db, `users/${auth.currentUser.uid}/tasks`, id), {
                 taskName: UpdateTask,
